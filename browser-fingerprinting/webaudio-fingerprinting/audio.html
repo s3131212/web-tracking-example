@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Source: https://github.com/fingerprintjs/fingerprintjs/blob/3201a7d61bb4df2816c226d8364cc98bb4235e59/src/sources/audio.ts
+        function getFingerprint(samples) {
+            return samples.reduce((ps, s) => ps + Math.abs(s), 0);
+        }
+
+        const context = new OfflineAudioContext(1, 70, 44100);
+
+        const oscillator = new OscillatorNode(context, {
+            type: 'sine',
+            frequency: 100
+        });
+
+        const compressor = new DynamicsCompressorNode(context, {
+            threshold: -50,
+            knee: 40,
+            ratio: 12,
+            reduction: -20,
+            attack: 0,
+            release: 0.25
+        });
+
+        oscillator.connect(context.destination);
+
+        oscillator.start(0);
+        context.oncomplete = (event) => {
+            const samples = event.renderedBuffer.getChannelData(0);
+            console.log(getFingerprint(samples));
+            console.table(samples);
+        };
+        context.startRendering()
+    </script>
+</body>
+</html>

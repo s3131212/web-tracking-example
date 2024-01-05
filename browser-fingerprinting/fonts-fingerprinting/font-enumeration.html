@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function font_enumeration() {
+            const fonts = ["Microsoft YaHei", "Microsoft Yi Baiti", "MingLiU", "MingLiU-ExtB", "Times New Roman Baltic", "Times New Roman CYR", "Times New Roman", "Ubuntu", "Noto Sans CJK TC", "TW-MOE-Std-Kai", "Droid Sans", "fake-font-this-should-not-exist"];
+            const containerDiv = document.createElement('div');
+            containerDiv.style.cssText = 'position: absolute;  display: block !important';
+            document.body.appendChild(containerDiv);
+
+            const pDefault = document.createElement('p');
+            pDefault.innerText = 'mmmmmmmmmmlli';
+            pDefault.style.cssText = `display:inline !important; width:auto !important; font-size: 10px !important;`;
+            containerDiv.appendChild(pDefault);
+
+            const ps = fonts.map((font, i) => {
+                const p = document.createElement('p');
+                p.innerText = 'mmmmmmmmmmlli';
+                p.style.cssText = `display:inline !important; width:auto !important; font: 10px "${font}" !important`;
+                containerDiv.appendChild(p);
+                return p;
+            });
+
+            const results = fonts.filter((font, i) => ps[i].offsetWidth != pDefault.offsetWidth);
+
+            return results;
+        }
+        console.log(font_enumeration())
+    </script>
+</body>
+</html>

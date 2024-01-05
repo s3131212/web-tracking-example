@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // Test document cache
+        fetch('http://localhost:5000/doc-cache.txt').then((response) => {
+            return response.text();
+        }).then((text) => {
+            console.log(`doc cache identifier: ${text}`);
+            document.querySelector('#doc-cache-id').innerHTML = `doc cache: ${text}`;
+        });
+
+        // Test redirection cache
+        fetch('http://localhost:5000/redir').then((response) => {
+            return response.text();
+        }).then((text) => {
+            console.log(`redirect cache identifier: ${text}`);
+            document.querySelector('#redir-cache-id').innerHTML = `redirect cache: ${text}`;
+        });
+    </script>
+</head>
+<body>
+    <p id="doc-cache-id"></p>
+    <p id="redir-cache-id"></p>
+
+    <!-- Test e-tag -->
+    <img src="http://localhost:5000/etag.gif">
+</body>
+</html>

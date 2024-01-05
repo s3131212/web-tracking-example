@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+        <script>
+            let canvas = document.body.appendChild(document.createElement('canvas'));
+            let ctx = canvas.getContext('2d');
+            canvas.height = 200;
+            canvas.width = 500;
+
+            // English pangram + emojis
+            var txt = "Cwm fjordbank glyphs vext quiz\n\r 😀😃😄😁😆😅";
+            ctx.textBaseline = "top";
+            // Use a commonly-seen font type
+            ctx.font = "14px 'Arial'";
+            ctx.textBaseline = "alphabetic";
+            ctx.fillStyle = "#f60";
+            ctx.fillRect(125,1,62,20);
+
+            // Color mixing
+            ctx.fillStyle = "#069";
+            ctx.fillText(txt, 2, 15);
+            ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+            ctx.fillText(txt, 4, 17);
+
+            // Canvas blending
+            ctx.globalCompositeOperation = "multiply";
+            ctx.fillStyle = "rgb(255,0,255)";
+            ctx.beginPath();
+            ctx.arc(50, 50, 50, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = "rgb(0,255,255)";
+            ctx.beginPath();
+            ctx.arc(100, 50, 50, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = "rgb(255,255,0)";
+            ctx.beginPath();
+            ctx.arc(75, 100, 50, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = "rgb(255,0,255)";
+
+            // Canvas winding
+            ctx.arc(75, 75, 75, 0, Math.PI * 2, true);
+            ctx.arc(75, 75, 25, 0, Math.PI * 2, true);
+            ctx.fill("evenodd");
+
+
+            // Calcuate the hash
+            // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+            async function digestMessage(message) {
+                const msgUint8 = new TextEncoder().encode(message);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+            }
+
+            digestMessage(canvas.toDataURL())
+            .then((digestHex) => document.body.appendChild(document.createTextNode(digestHex)));
+        </script>
+    </body>
+</html>

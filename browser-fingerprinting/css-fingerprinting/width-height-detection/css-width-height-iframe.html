@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style id="style">
+        html, body {
+            overflow: hidden;
+        }
+
+        @media (min-width: 89px) {
+            #probeW {
+                background: url("/width/89");
+            }
+        }
+        @media (min-width: 90px) {
+            #probeW {
+                background: url("/width/90");
+            }
+        }
+        @media (min-width: 91px) {
+            #probeW {
+                background: url("/width/91");
+            }
+        }
+        @media (min-width: 102px) {
+            #probeW {
+                background: url("/width/102");
+            }
+        }
+        @media (min-width: 103px) {
+            #probeW {
+                background: url("/width/103");
+            }
+        }
+        @media (min-width: 104px) {
+            #probeW {
+                background: url("/width/104");
+            }
+        }
+
+
+        @media (min-height: 71px) {
+            #probeH {
+                background: url("/height/71");
+            }
+        }
+        @media (min-height: 72px) {
+            #probeH {
+                background: url("/height/72");
+            }
+        }
+        @media (min-height: 73px) {
+            #probeH {
+                background: url("/height/73");
+            }
+        }
+        @media (min-height: 78px) {
+            #probeH {
+                background: url("/height/78");
+            }
+        }
+        @media (min-height: 79px) {
+            #probeH {
+                background: url("/height/79");
+            }
+        }
+        @media (min-height: 80px) {
+            #probeH {
+                background: url("/height/80");
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="probeW"></div>
+    <div id="probeH"></div>
+    <script>
+        /* print the window size to body */
+        function printWindowSize() {
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            document.body.innerHTML = "W=" + w + ", " + "H=" + h;
+        }
+        printWindowSize();
+
+        const styleText = document.getElementById('style').sheet;
+
+        for (let i = 1; i < 200; i++) {
+            let st = `@media (min-width: ${i}px) {
+                #probeW {
+                    background: url("/width/${i}");
+                }
+            }`;
+
+            styleText.insertRule(st, i);
+        }
+        
+
+        
+    </script>
+</body>
+</html>

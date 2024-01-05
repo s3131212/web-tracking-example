@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // https://github.com/z0ccc/extension-detector/blob/main/src/utils/protectedExtensions.js
+        const extenstions = {
+            'uBlock Origin': {
+                id: 'cjpalhdlnbpafiamejdnhcphjbkeiagm',
+                file: 'web_accessible_resources/noop.html',
+            },
+            'Decentraleyes': {
+                id: 'ldpochfccmkkmhdbclfhpagapcfdljkj',
+                file: 'pages/welcome/welcome.html',
+            },
+        }
+
+        const REPEAT = 200;
+        const THRESHOLD = 0.67;
+        const sum = (arr) => arr.reduce((ps, a) => ps + a, 0);
+
+        // 測試執行時間
+        const fetchTiming = async (url) => {
+            const start = performance.now();
+            try {
+                await fetch(url);
+            } catch (e) {
+                // pass
+            } finally {
+                return performance.now() - start;
+            }
+        };
+
+        // driver
+        const testExtension = async (extensionId, extesionFile) => {
+            const treatmentUrl = `chrome-extension://${extensionId}/${extesionFile}`;
+            const controlUrl = `chrome-extension://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/${extesionFile}`;
+
+            // 測試兩個路徑的執行時間
+            const fasterCnt = sum(await Promise.all(Array.from(Array(REPEAT)).map(async () => {
+                const treatmentTime = await fetchTiming(treatmentUrl);
+                const controlTime = await fetchTiming(controlUrl);
+                return treatmentTime > controlTime ? 1 : 0;
+            })));
+
+            return fasterCnt / REPEAT > THRESHOLD;
+        };
+
+        const testAllExtensions = async () => {
+            const result = {};
+            for (const [extensionName, extension] of Object.entries(extenstions)) {
+                result[extensionName] = await testExtension(extension.id, extension.file);
+            }
+            return result;
+        };
+
+        (async () => {
+            console.log(await testAllExtensions());
+        })();
+    </script>
+</body>
+
+</html>

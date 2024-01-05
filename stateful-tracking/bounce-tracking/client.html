@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const hops = [
+            "http://tracker1.example:5000/bounce",
+            "http://tracker2.example:5001/bounce",
+            "http://tracker3.example:5002/bounce",
+        ];
+        const dest = "http://social.example:8000/dest.html";
+
+        const next_url = hops.reverse().reduce((acc, hop) => {
+            const url = new URL(hop);
+            url.searchParams.append("next_url", acc);
+            return url.toString();
+        }, "");
+
+        const url = new URL(next_url);
+        url.searchParams.append("dest_url", dest);
+        
+        console.log(url.toString());
+
+        function openlink() {
+            window.location.replace(url.toString())
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <a href="#" onclick="openlink()">Go to dest.</a>
+</body>
+</html>

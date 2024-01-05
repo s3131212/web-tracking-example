@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        setTimeout(() => {
+            if (getComputedStyle(document.querySelector('#ww_hovercard')).getPropertyValue('top') == '10px') {
+                console.log('Wikiwand detected');
+            } else {
+                console.log('Wikiwand not detected');
+            }
+        }, 100)
+    </script>
+</head>
+<body>
+    <div id="ww_hovercard">
+        <div class="ww_image">
+            <img trigger="yes" />
+        </div>
+    </div>
+    <br /><br /><br /><br />
+    Install <a href="https://chromewebstore.google.com/detail/wikiwand-wikipedia-modern/emffkefkbkpkgpdeeooapgaicgmcbolj">Wikiwand</a> to test.
+</body>
+</html>

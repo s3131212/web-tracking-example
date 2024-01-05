@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const gl = canvas.getContext('webgl');
+
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+        const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+
+        console.log(`${gl.getParameter(gl.VENDOR)}, ${gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL)}`);
+        console.log(`${gl.getParameter(gl.RENDERER)}, ${gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)}`);
+    </script>
+</body>
+</html>

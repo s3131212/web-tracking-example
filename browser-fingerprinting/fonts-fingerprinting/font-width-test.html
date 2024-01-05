@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, tr, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Arial</td>
+            <td><span style="font-family: Arial;">mmmmmmmmmmlli</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Droid Sans</td>
+            <td><span style="font-family: Droid Sans;">mmmmmmmmmmlli</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Times New Roman</td>
+            <td><span style="font-family: Times New Roman;">mmmmmmmmmmlli</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Noto Sans CJK TC</td>
+            <td><span style="font-family: Noto Sans CJK TC;">mmmmmmmmmmlli</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Courier New</td>
+            <td><span style="font-family:'Courier New';">mmmmmmmmmmlli</span></td>
+            <td></td>
+        </tr>
+    </table>
+    <script>
+        // Insert the width of <p> to the third column of the table
+        const ps = document.querySelectorAll('span');
+        for (let i = 0; i < ps.length; i++) {
+            const p = ps[i];
+            const td = p.parentNode;
+            td.nextElementSibling.innerText = p.offsetWidth + "px";
+        }
+    </script>
+</body>
+</html>

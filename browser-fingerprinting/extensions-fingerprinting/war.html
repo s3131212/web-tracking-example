@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // https://github.com/z0ccc/extension-detector/blob/main/src/utils/extensions.js
+        const extenstions = {
+            'Video Speed Controller': {
+                id: 'nffaoalbilbmmfgbnbgppjihopabppdk',
+                file: 'inject.css',
+            },
+            'Google Translate': {
+                id: 'aapbdbdomjkkjkaonfhkkikfgjllcleb',
+                file: 'popup_css_compiled.css',
+            },
+            'Wikiwand: Wikipedia Modernized': {
+                id: 'emffkefkbkpkgpdeeooapgaicgmcbolj',
+                file: 'images/cards/feedback.png',
+            },
+            '1Password – Password Manager': {
+                id: 'aeblfdkhhhdcdjpifhhbdiojplfjncoa',
+                file: 'inline/menu/menu.html',
+            },
+        }
+
+        // driver
+        const testExtension = async (extensionId, extesionFile) => {
+            const treatmentUrl = `chrome-extension://${extensionId}/${extesionFile}`;
+
+            // Check if the path exists.
+            try {
+                await fetch(treatmentUrl);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        };
+
+        const testAllExtensions = async () => {
+            const result = {};
+            for (const [extensionName, extension] of Object.entries(extenstions)) {
+                result[extensionName] = await testExtension(extension.id, extension.file);
+            }
+            return result;
+        };
+
+        (async () => {
+            console.log(await testAllExtensions());
+        })();
+    </script>
+</body>
+
+</html>
